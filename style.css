@@ -1,0 +1,157 @@
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f7f3e9; /* ከቀዳሚው ጋር ተመሳሳይ የጀርባ ቀለም */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f7f3e9;
+    border-radius: 12px;
+}
+
+.title {
+    text-align: center;
+    color: #1A237E;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* የካርዶቹ ዲዛይን ከቀዳሚው ጋር እንዲመሳሰል (ነጭ ዳራ እና ሰማያዊ ጠርዝ) */
+.card {
+    background: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-top: 5px solid #1A237E;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card h2 {
+    font-size: 16px;
+    color: #1A237E;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background: #fafaf9;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: #1A237E;
+    background: #fff;
+}
+
+/* አረንጓዴው የቁልፍ (Button) ዲዛይን */
+.btn {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #1b5e20;
+}
+
+.summary-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px dashed #ccc;
+    font-size: 14px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #1A237E;
+    color: white;
+}
+
+.delete-btn {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+/* የሎጊን/ምዝገባ ገጽ ዲዛይን (ከዋናው ጋር ተመሳሳይ እንዲሆን) */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f7f3e9;
+    padding: 15px;
+}
+
+.auth-card {
+    background: #ffffff;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
+    border-top: 5px solid #1A237E;
+}
+
+.auth-card h2 {
+    text-align: center;
+    color: #1A237E;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.auth-card .form-group {
+    margin-bottom: 15px;
+}
