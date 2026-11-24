@@ -30,12 +30,12 @@ function toggleAuthMode() {
         subtitle.innerText = "አዲስ አካውንት ይፍጠሩ";
         btn.innerText = "ተመዝገብ";
         toggleText.innerText = "አካውንት አለዎት? ይግቡ";
-        confirmGroup.style.display = 'block'; // የፓስወርድ ማረጋገጫ ሳጥን ማሳየት
+        confirmGroup.style.display = 'block';
     } else {
         subtitle.innerText = "እባክዎ ይግቡ";
         btn.innerText = "ይግቡ";
         toggleText.innerText = "አካውንት የለዎትም? ይመዝገቡ";
-        confirmGroup.style.display = 'none'; // መደበኛ ሲሆን መደበቅ
+        confirmGroup.style.display = 'none';
     }
 }
 
@@ -51,16 +51,16 @@ function handleAuth() {
     if (isRegisterMode) {
         const confirmPass = document.getElementById('authConfirmPassword').value.trim();
         if (pass !== confirmPass) {
-            alert("የይለፍ ቃሎቹ እርስ በእርስ አልተመሳሰሉም! እባክዎ እንደገና ይፈትሹ።");
+            alert("የይለፍ ቃሎቹ እርስ በእርስ አልተመሳሰሉም!");
             return;
         }
 
         if (localStorage.getItem('user_' + user)) {
-            alert("ይህ የተጠቃሚ ስም ተይዟል! ሌላ ይሞክሩ።");
+            alert("ይህ የተጠቃሚ ስም ተይዟል!");
             return;
         }
         localStorage.setItem('user_' + user, pass);
-        alert("ምዝገባው ተሳክቷል! አሁን መግባት ይችላሉ።");
+        alert("ምዝገባው ተሳክቷል! መግባት ይችላሉ።");
         document.getElementById('authConfirmPassword').value = '';
         toggleAuthMode();
     } else {
@@ -87,7 +87,7 @@ function setCapital() {
     const inputVal = parseFloat(document.getElementById('capitalInput').value);
     
     if (isNaN(inputVal) || inputVal <= 0) {
-        alert("እባክዎ ትክክለኛ እና ከዜሮ በላይ የሆነ የካፒታል መጠን ያስገቡ!");
+        alert("እባክዎ ትክክለኛ የካፒታል መጠን ያስገቡ!");
         return;
     }
     
@@ -113,11 +113,7 @@ function setCapital() {
 }
 
 function sanitizeText(text) {
-    return text.replace(/&/g, "&amp;")
-               .replace(/</g, "&lt;")
-               .replace(/>/g, "&gt;")
-               .replace(/"/g, "&quot;")
-               .replace(/'/g, "&#039;");
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 function addExpense() {
@@ -126,35 +122,25 @@ function addExpense() {
     let reason = document.getElementById('expenseReason').value.trim();
 
     if (!date || isNaN(amount) || amount <= 0 || !reason) {
-        alert("እባክዎ ቀን፣ መጠን እና ምክንያቱን በትክክል ይሙሉ!");
+        alert("እባክዎ ቀን፣ መጠን እና ምክንያቱን ይሙሉ!");
         return;
     }
 
     let currentBalance = capital;
-    expenses.forEach(item => {
-        currentBalance -= item.amount;
-    });
+    expenses.forEach(item => { currentBalance -= item.amount; });
 
     if (amount > currentBalance) {
-        alert(`ማስጠንቀቂያ፡ የጠየቁት ወጪ (${amount.toLocaleString()} ብር) ካለዎት ቀሪ ገንዘብ (${currentBalance.toLocaleString()} ብር) ይበልጣል።`);
+        alert(`ማስጠንቀቂያ፡ የጠየቁት ወጪ ከቀሪው ገንዘብ ይበልጣል!`);
         return;
     }
 
     reason = sanitizeText(reason);
 
-    const newExpense = {
-        id: Date.now(),
-        date: date,
-        amount: amount,
-        reason: reason
-    };
-
-    expenses.push(newExpense);
+    expenses.push({ id: Date.now(), date: date, amount: amount, reason: reason });
     localStorage.setItem('expenses', JSON.stringify(expenses));
 
     document.getElementById('expenseAmount').value = '';
     document.getElementById('expenseReason').value = '';
-    
     updateUI();
 }
 
@@ -171,34 +157,98 @@ function updateUI() {
     tbody.innerHTML = '';
 
     let runningBalance = capital;
+    let monthlyTotals = {}; // ለወርሃዊ ድምር ማሰባሰቢያ
 
     expenses.forEach(item => {
         runningBalance -= item.amount;
         
+        // ወርሃዊ ድምር ለማስላት (YYYY-MM)
+        let monthKey = item.date.substring(0, 7);
+        if (!monthlyTotals[monthKey]) monthlyTotals[monthKey] = 0;
+        monthlyTotals[monthKey] += item.amount;
+        
         const row = document.createElement('tr');
-        row.innerHTML = 
-            '<td>' + item.date + '</td>' +
-            '<td>' + item.amount.toLocaleString() + ' ብር</td>' +
-            '<td>' + item.reason + '</td>' +
-            '<td><b>' + runningBalance.toLocaleString() + ' ብር</b></td>' +
-            '<td><button class="delete-btn" onclick="deleteExpense(' + item.id + ')">ሰርዝ</button></td>';
+        row.innerHTML = '<td>' + item.date + '</td><td>' + item.amount.toLocaleString() + ' ብር</td><td>' + item.reason + '</td><td><b>' + runningBalance.toLocaleString() + ' ብር</b></td><td><button class="delete-btn" onclick="deleteExpense(' + item.id + ')">ሰርዝ</button></td>';
         tbody.appendChild(row);
     });
 
     const remElement = document.getElementById('displayRemaining');
     remElement.innerText = runningBalance.toLocaleString() + ' ብር';
-    
-    if (runningBalance < 0) {
-        remElement.style.color = '#d32f2f';
-    } else {
-        remElement.style.color = '#1B5E20';
+    remElement.style.color = runningBalance < 0 ? '#d32f2f' : '#1B5E20';
+
+    renderMonthlySummary(monthlyTotals);
+    renderArchives();
+}
+
+// የወርሃዊ ድምር ማሳያ ራሱን የቻለ ክፍል
+function renderMonthlySummary(monthlyTotals) {
+    let container = document.getElementById('monthlySummaryContainer');
+    if (!container) return;
+
+    let html = '';
+    let months = Object.keys(monthlyTotals);
+    if (months.length === 0) {
+        container.innerHTML = '<p style="font-size: 13px; color: #666;">ገና የተመዘገበ ወጪ የለም።</p>';
+        return;
     }
 
-    renderArchives();
+    html = '<ul style="margin: 0; padding-left: 18px; font-size: 13px;">';
+    months.forEach(m => {
+        html += '<li style="margin-bottom: 5px;">ወር <b>' + m + '</b> ጠቅላላ ወጪ: <b style="color: #d32f2f;">' + monthlyTotals[m].toLocaleString() + ' ብር</b></li>';
+    });
+    html += '</ul>';
+    container.innerHTML = html;
+}
+
+// 1. መረጃዎችን በፋይል መልክ ማውረድ (Backup)
+function exportBackup() {
+    const backupData = {
+        capital: capital,
+        expenses: expenses,
+        archives: archives
+    };
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", "expense_backup_" + new Date().toISOString().slice(0,10) + ".json");
+    document.body.appendChild(dlAnchor);
+    dlAnchor.click();
+    dlAnchor.remove();
+}
+
+// 2. ያስቀመጡትን ፋይል መመለስ (Restore)
+function importBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const imported = JSON.parse(e.target.result);
+            if (imported.capital !== undefined && imported.expenses) {
+                capital = imported.capital;
+                expenses = imported.expenses;
+                archives = imported.archives || [];
+
+                localStorage.setItem('capital', capital);
+                localStorage.setItem('expenses', JSON.stringify(expenses));
+                localStorage.setItem('archives', JSON.stringify(archives));
+
+                updateUI();
+                alert("ምቲኬው (Backup) በተሳካ ሁኔታ ተመለሰ!");
+            } else {
+                alert("የተሳሳተ የፋይል ቅርጸት!");
+            }
+        } catch (err) {
+            alert("ፋይሉን ማንበብ አልተቻለም!");
+        }
+    };
+    reader.readAsText(file);
 }
 
 function renderArchives() {
     const container = document.getElementById('archivesContainer');
+    if (!container) return;
     if (archives.length === 0) {
         container.innerHTML = '<p style="font-size: 14px; color: #666;">ገና የተዘጋ ፎልደር የለም።</p>';
         return;
@@ -222,29 +272,12 @@ function renderArchives() {
 
         const div = document.createElement('div');
         div.style.cssText = "background: #faf8f0; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #d1c7a3;";
-        
-        div.innerHTML = 
-            '<div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleArchive(' + index + ')">' +
-                '<div>' +
-                    '<b>ፎልደር #' + (index + 1) + ' (የተዘጋበት ቀን: ' + arch.date + ')</b><br>' +
-                    '<span style="font-size: 13px; color: #444;">ካፒታል: <b>' + arch.capital.toLocaleString() + ' ብር</b> | ቀሪ: <b>' + rem.toLocaleString() + ' ብር</b></span>' +
-                '</div>' +
-                '<span style="font-size: 12px; background: #1A237E; color: white; padding: 5px 10px; border-radius: 6px;">ዝርዝር አሳይ ▼</span>' +
-            '</div>' +
-            '<div id="archive-details-' + index + '" style="display: none; margin-top: 10px; border-top: 1px solid #d1c7a3; padding-top: 8px;">' +
-                expensesHtml +
-            '</div>';
-
+        div.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleArchive(' + index + ')"><div><b>ፎልደር #' + (index + 1) + ' (' + arch.date + ')</b><br><span style="font-size: 13px; color: #444;">ካፒታል: <b>' + arch.capital.toLocaleString() + ' ብር</b> | ቀሪ: <b>' + rem.toLocaleString() + ' ብር</b></span></div><span style="font-size: 12px; background: #1A237E; color: white; padding: 5px 10px; border-radius: 6px;">ዝርዝር ▼</span></div><div id="archive-details-' + index + '" style="display: none; margin-top: 10px; border-top: 1px solid #d1c7a3; padding-top: 8px;">' + expensesHtml + '</div>';
         container.appendChild(div);
     });
 }
 
 function toggleArchive(index) {
     const detailsDiv = document.getElementById('archive-details-' + index);
-    if (detailsDiv.style.display === 'none') {
-        detailsDiv.style.display = 'block';
-    } else {
-        detailsDiv.style.display = 'none';
-    }
+    detailsDiv.style.display = detailsDiv.style.display === 'none' ? 'block' : 'none';
 }
-
