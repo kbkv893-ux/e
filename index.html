@@ -107,4 +107,24 @@
     <script src="script.js"></script>
 </body>
 </html>
+        <!-- ወርሃዊ ድምር ማሳያ ካርድ -->
+        <div class="card" style="border-top-color: #2e7d32;">
+            <h2>📊 ወርሃዊ የወጪ ድምር</h2>
+            <div id="monthlySummaryContainer">
+                <p style="font-size: 13px; color: #666;">ገና የተመዘገበ ወጪ የለም።</p>
+            </div>
+        </div>
+
+        <!-- መረጃዎችን ማስቀመጫ እና መመለሻ (Backup & Restore) -->
+        <div class="card" style="border-top-color: #ff8f00;">
+            <h2>💾 የውሂብ ምትኬ (Backup & Restore)</h2>
+            <p style="font-size: 12px; color: #666; margin-bottom: 12px;">መረጃዎ እንዳይጠፋ በፋይል መልክ ያስቀምጡ ወይም ይመልሱ።</p>
+            <button class="btn" onclick="exportBackup()" style="background: #0277bd; margin-bottom: 10px;">ምትኬ አውርድ (Download Backup)</button>
+            
+            <div class="form-group" style="margin-top: 10px;">
+                <label style="font-size: 13px; color: #333; display: block; margin-bottom: 5px;">ምትኬ መልሶ ጫን (Restore Backup):</label>
+                <input type="file" id="backupFile" accept=".json" onchange="importBackup(event)" style="padding: 8px; font-size: 12px;">
+            </div>
+        </div>
+
 
