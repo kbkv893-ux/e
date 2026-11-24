@@ -1,25 +1,23 @@
 {
-  "name": "የወጪ ደብተር",
+  "name": "የግል ወጪ እና ገቢ መቆጣጠሪያ አፕሊኬሽን",
   "short_name": "የወጪ ደብተር",
   "description": "የግል ወጪ እና ገቢ መቆጣጠሪያ አፕሊኬሽን",
-  "start_url": "https://kbkv893-ux.github.io/e/index.html",
-  "scope": "https://kbkv893-ux.github.io/e/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f4e7c3",
   "theme_color": "#1a237e",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://kbkv893-ux.github.io/e/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "https://kbkv893-ux.github.io/e/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
