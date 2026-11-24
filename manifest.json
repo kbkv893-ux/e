@@ -1,22 +1,25 @@
 {
-  "name": "የወጪ ደብተር - የፋይናንስ አስተዳደር",
+  "name": "የወጪ ደብተር",
   "short_name": "የወጪ ደብተር",
-  "description": "የግል ካፒታል እና የወጪ አስተዳደር መተግበሪያ",
-  "start_url": "/e/",
-  "scope": "/e/",
+  "description": "የግል ወጪ እና ገቢ መቆጣጠሪያ አፕሊኬሽን",
+  "start_url": "https://kbkv893-ux.github.io/e/index.html",
+  "scope": "https://kbkv893-ux.github.io/e/",
   "display": "standalone",
   "background_color": "#f4e7c3",
   "theme_color": "#1a237e",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192 (1).png",
+      "src": "https://kbkv893-ux.github.io/e/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512 (1).png",
+      "src": "https://kbkv893-ux.github.io/e/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
