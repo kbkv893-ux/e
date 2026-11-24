@@ -1,6 +1,7 @@
 {
-  "name": "የወጪ ደብተር",
-  "short_name": "ወጪ",
+  "name": "የወጪ ደብተር - የፋይናንስ አስተዳደር",
+  "short_name": "የወጪ ደብተር",
+  "description": "የግል ካፒታል እና የወጪ አስተዳደር መተግበሪያ",
   "start_url": "/e/",
   "scope": "/e/",
   "display": "standalone",
